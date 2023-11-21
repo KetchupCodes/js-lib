@@ -39,16 +39,21 @@ function loadScript(url, callback) {
  
 }
 
-function waitForElementToLoad(callback,id) {
-  console.log("In wait functoin",id)
-  if (document.getElementById(id)) {
-      console.log("Found element with ID ",id)
+function waitForElementToLoad(callback, id) {
+  console.log("In wait function", id);
+
+  function checkElement() {
+    if (document.getElementById(id)) {
+      console.log("Found element with ID", id);
       callback();
-  } else {
-      setTimeout(function() {
-          waitForElementToLoad(callback,id);
-      }, 1000); 
+    } else {
+      setTimeout(() => {
+        checkElement();
+      }, 100);
+    }
   }
+
+  checkElement();
 }
 
 
@@ -128,7 +133,7 @@ class Fetcher {
                   if (typeof subscription.callback === "function") {
                       subscription.callback(data.parsedData);
                   }
-              },"email");
+              },this.fetcherOptions.fieldId);
 
               }
               
