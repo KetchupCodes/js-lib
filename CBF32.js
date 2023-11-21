@@ -133,7 +133,7 @@ class Fetcher {
                   if (typeof subscription.callback === "function") {
                       subscription.callback(data.parsedData);
                   }
-              },this.fetcherOptions.fieldId);
+              },this.fetcher.fieldId);
 
               }
               
@@ -203,6 +203,7 @@ class UnifiedModule {
       this.chatbotOptions = chatbotOptions;
       this.fetcher = new Fetcher();
       this.fetcher.initialize(fetcherOptions);
+      
       this.subscriptions = subscriptions;
   }
 
