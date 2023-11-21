@@ -39,22 +39,22 @@ function loadScript(url, callback) {
  
 }
 
-function waitForElementToLoad(callback, id) {
+(function waitForElementToLoad(callback, id) {
   console.log("In wait function", id);
-
+  
+  var obj = setInterval(
   function checkElement() {
     if (document.getElementById(id)) {
       console.log("Found element with ID", id);
+      if(obj){
+        clearInterval(obj);
+      }
       callback();
-    } else {
-      setTimeout(() => {
-        checkElement();
-      }, 1000);
-    }
-  }
+    } 
+  },100)
+  
 
-  checkElement();
-}
+})()
 
 
 
