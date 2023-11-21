@@ -40,11 +40,12 @@ function loadScript(url, callback) {
 }
 
 function waitForElementToLoad(callback,id) {
+  
   if (document.getElementById(id)) {
       callback();
   } else {
       setTimeout(function() {
-          waitForElementToLoad(callback);
+          waitForElementToLoad(callback,id);
       }, 100); 
   }
 }
