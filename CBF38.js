@@ -39,7 +39,7 @@ function loadScript(url, callback) {
  
 }
 
-(function waitForElementToLoad(callback, id) {
+function waitForElementToLoad(callback, id) {
   console.log("In wait function", id);
   
   var obj = setInterval(
@@ -54,7 +54,7 @@ function loadScript(url, callback) {
   },100)
   
 
-})()
+}
 
 
 
