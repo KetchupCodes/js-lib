@@ -49,7 +49,7 @@ function waitForElementToLoad(callback, id) {
     } else {
       setTimeout(() => {
         checkElement();
-      }, 100);
+      }, 1000);
     }
   }
 
