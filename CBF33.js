@@ -133,7 +133,7 @@ class Fetcher {
                   if (typeof subscription.callback === "function") {
                       subscription.callback(data.parsedData);
                   }
-              },this.fetcher.fieldId);
+              },this.fieldId);
 
               }
               
@@ -201,6 +201,7 @@ class Fetcher {
 class UnifiedModule {
   constructor(chatbotOptions, fetcherOptions, subscriptions) {
       this.chatbotOptions = chatbotOptions;
+      this.fieldId = fetcherOptions.fieldId;
       this.fetcher = new Fetcher();
       this.fetcher.initialize(fetcherOptions);
       
