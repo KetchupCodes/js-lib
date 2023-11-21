@@ -51,7 +51,7 @@ function waitForElementToLoad(callback, id) {
       }
       callback();
     } 
-  },100)
+  },200)
   
 
 }
