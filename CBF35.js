@@ -128,12 +128,12 @@ class Fetcher {
             this.fetchData().then(data => {
               if(this.isNotEmpty(data)){
 
-                console.log(this.fieldId);  
+                console.log(params.fieldId);  
                 waitForElementToLoad(function() {
                   if (typeof subscription.callback === "function") {
                       subscription.callback(data.parsedData);
                   }
-              },this.fieldId);
+              },params.fieldId);
 
               }
               
@@ -302,7 +302,9 @@ class UnifiedModule {
   handleSubscription(subscription) {
       return this.fetcher.subscribeAndListen({
           topics: subscription.topics,
-          callback: subscription.callback
+          callback: subscription.callback,
+          fieldId: this.fieldId
+
       });
   }
 
