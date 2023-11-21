@@ -128,7 +128,7 @@ class Fetcher {
             this.fetchData().then(data => {
               if(this.isNotEmpty(data)){
 
-                  
+                console.log(this.fieldId);  
                 waitForElementToLoad(function() {
                   if (typeof subscription.callback === "function") {
                       subscription.callback(data.parsedData);
