@@ -40,13 +40,14 @@ function loadScript(url, callback) {
 }
 
 function waitForElementToLoad(callback,id) {
-  
+  console.log("In wait functoin",id)
   if (document.getElementById(id)) {
+      console.log("Found element with ID ",id)
       callback();
   } else {
       setTimeout(function() {
           waitForElementToLoad(callback,id);
-      }, 100); 
+      }, 1000); 
   }
 }
 
