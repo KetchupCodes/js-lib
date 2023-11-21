@@ -39,7 +39,15 @@ function loadScript(url, callback) {
  
 }
 
-
+function waitForElementToLoad(callback,id) {
+  if (document.getElementById(id)) {
+      callback();
+  } else {
+      setTimeout(function() {
+          waitForElementToLoad(callback);
+      }, 100); 
+  }
+}
 
 
 
@@ -112,11 +120,14 @@ class Fetcher {
           if (subscription.topics.includes(action) || subscription.topics.includes('*')) {
             this.fetchData().then(data => {
               if(this.isNotEmpty(data)){
-                setTimeout(function() {
+
+                  
+                waitForElementToLoad(function() {
                   if (typeof subscription.callback === "function") {
                       subscription.callback(data.parsedData);
                   }
-              }, 1500);
+              },"email");
+
               }
               
             
