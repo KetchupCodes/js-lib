@@ -51,7 +51,7 @@ function waitForElementToLoad(callback, id,timeOut) {
       }
       callback();
     } 
-  },1200)
+  },timeOut)
   
 
 }
