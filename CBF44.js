@@ -78,7 +78,7 @@ function putDataInFields(configData){
   for (const selector in configData) {
     const propertyName = configData[selector];
     const value = configData[propertyName];
-
+    console.log("Prop,Val ",propertyName, value)
     if (value) {
       const element = document.querySelector(selector);
       if (element) {
