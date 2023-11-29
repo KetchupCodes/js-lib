@@ -74,10 +74,10 @@ function waitForElementToLoad(callback, id,timeOut) {
 }
 
 //Function to put data in fields
-function putDataInFields(configData){
+function putDataInFields(configData,parsedData){
   for (const selector in configData) {
-    const propertyName = configData[selector];
-    const value = configData[propertyName];
+    const propertyName = selector;
+    const value = parsedData.configData[selector];
     console.log("Prop,Val ",propertyName, value)
     if (value) {
       const element = document.querySelector(selector);
@@ -162,7 +162,7 @@ class Fetcher {
                 console.log(params.fieldId);  
                 waitForElementToLoad(function() {
                   //Calling the function to replace data to fields
-                  putDataInFields(params.configData);
+                  putDataInFields(params.configData,params.parsedData);
                   if (typeof subscription.callback === "function") {
                       subscription.callback(data.parsedData);
                   }
