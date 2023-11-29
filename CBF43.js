@@ -77,7 +77,7 @@ function waitForElementToLoad(callback, id,timeOut) {
 function putDataInFields(configData){
   for (const selector in configData) {
     const propertyName = configData[selector];
-    const value = data[propertyName];
+    const value = configData[propertyName];
 
     if (value) {
       const element = document.querySelector(selector);
