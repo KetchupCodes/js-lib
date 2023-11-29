@@ -79,7 +79,8 @@ function putDataInFields(configData,parsedData){
     console.log("Selector ",selector," Value ",configData[selector])
     console.log(parsedData)
     const propertyName = selector;
-    const value = parsedData.configData[selector];
+    const fieldName = configData[selector]
+    const value = parsedData[fieldName];
     console.log("Prop,Val ",propertyName, value)
     if (value) {
       const element = document.querySelector(selector);
