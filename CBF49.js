@@ -30,7 +30,6 @@ const signJWT = (data, secretKey) => {
   return `${header}.${payload}.${signature}`;
 };
 
-//Moved the function from loader to CDN file
 const dispatchInputEvents = (input, value) => {
   if (input) {
     console.log(input)
@@ -54,42 +53,74 @@ function loadScript(url, callback) {
   document.head.appendChild(script);
   script.onload = callback;
  
-}
+}  
 
-function waitForElementToLoad(callback, id,timeOut) {
-  console.log("In wait function", id);
-  
-  var obj = setInterval(
-  function checkElement() {
-    if (document.getElementById(id)) {
-      console.log("Found element with ID", id);
-      if(obj){
-        clearInterval(obj);
-      }
-      callback();
-    } 
-  },timeOut)
-  
+function waitForElementToLoad(callback, selectors,operations, timeOut) {
+  if (operations.hasOwnProperty("click")) {
+    var operation = setInterval(checkElementAndClick, timeOut);
 
-}
-
-//Function to put data in fields
-function putDataInFields(configData,parsedData){
-  for (const selector in configData) {
-    console.log("Selector ",selector," Value ",configData[selector])
-    console.log(parsedData)
-    const propertyName = selector;
-    const fieldName = configData[selector]
-    const value = parsedData[fieldName];
-    console.log("Prop,Val ",propertyName, value)
-    if (value) {
+    function checkElementAndClick() {
+      const selector = operations["click"];
       const element = document.querySelector(selector);
+  
       if (element) {
-        dispatchInputEvents(element, value);
+          console.log("Element is loaded. Waiting for 0.5 seconds before clicking on it.");
+          setTimeout(function() {
+              console.log("Clicking on the element now.");
+              element.click();
+              clearInterval(operation);
+          }, 200); 
+      }
+  }
+}
+  console.log("In wait function", selectors);
+
+  var obj = setInterval(function checkElements() {
+    const allElementsLoaded = Object.keys(selectors).every((key) => {
+      console.log(selectors[key])
+      return document.querySelector(selectors[key]);
+    });
+
+    if (allElementsLoaded) {
+      console.log("All elements are loaded");
+      clearInterval(obj);
+      callback();
+    }
+  }, timeOut);
+}
+
+function putDataInFields(fields, parsedData) {
+  console.log("Fields-", fields);
+  console.log("ParsedData-", parsedData);
+
+  for (const fieldName in fields) {
+    const selector = fields[fieldName];
+    const value = parsedData[fieldName];
+    console.log("Selector: ", selector, " Value: ", value);
+
+    if (fieldName === 'intent') {
+      // Handle the special case for the "intent" field
+      const radioGroupSelector = '#enq-type';
+      const radioButtons = document.querySelectorAll(`${radioGroupSelector} input`);
+      
+      radioButtons.forEach((radioButton) => {
+        if (radioButton.value.toLowerCase() === value.toLowerCase()) {
+          radioButton.click(); 
+        }
+      });
+    } else {
+      if (value) {
+        console.log("Value identified", value);
+        const element = document.querySelector(selector);
+        if (element) {
+          console.log("element identified", element);
+          dispatchInputEvents(element, value);
+        }
       }
     }
   }
 }
+
 
 
 class Fetcher {
@@ -133,7 +164,6 @@ class Fetcher {
   }
 
   const data = await response.json();
-  console.log(data)
   if (data.isValid === true) {
       return true;
   } else {
@@ -154,22 +184,29 @@ class Fetcher {
     this._subscriptions.push({ id: subscriptionId, topics: topics, callback: callback });
 
     var subscription = { id: subscriptionId, topics: topics, callback: callback }
+ 
+      
+      const action = this.getURLParams('action');
+      console.log("First if",action)
 
-    if (subscription) {
-      const action = this.getURLParams('action'); 
-      if(action){
-          if (subscription.topics.includes(action) || subscription.topics.includes('*')) {
+        
+     
+          if (action) {
+            console.log("Inside if",action)
             this.fetchData().then(data => {
               if(this.isNotEmpty(data)){
-
-                console.log(params.fieldId);  
+                
                 waitForElementToLoad(function() {
+                  console.log(data.middleware.selector)
+                  console.log(data.parsedData)
+
+                  
                   //Calling the function to replace data to fields
-                  putDataInFields(params.configData,data.parsedData);
+                  putDataInFields(data.middleware.selector,data.parsedData);
                   if (typeof subscription.callback === "function") {
                       subscription.callback(data.parsedData);
                   }
-              },params.fieldId,params.timeOut);
+              },data.middleware.selector,data.middleware.operations,params.timeOut);
 
               }
               
@@ -179,9 +216,9 @@ class Fetcher {
               console.error("There was an error fetching data:", error.message);
           });
       }
-      }
+      
      
-  }
+  
     return subscriptionId;
   }
 
@@ -251,7 +288,7 @@ class UnifiedModule {
           element.id = 'chatbot-container';
           element.style.cssText = `
             position: fixed; 
-            right: 68px; 
+            right: 80px; 
             bottom: 68px; 
             width: ${this.chatbotOptions.defaultWidth}; 
             height: ${this.chatbotOptions.defaultHeight}; 
@@ -272,7 +309,7 @@ class UnifiedModule {
           const jwtToken = signJWT(data, secretKey);
           let chatbotDomain = this.chatbotOptions.domain+"?token="+jwtToken
           console.log(chatbotDomain)
-          element.innerHTML = `<iframe id="${this.chatbotOptions.elementId}" src="${chatbotDomain}" frameborder="0" style="width: 100%; height: 100%;"></iframe>`;
+          element.innerHTML = `<iframe sandbox="allow-top-navigation allow-scripts allow-forms" id="${this.chatbotOptions.elementId}" src="${chatbotDomain}" frameborder="0" style="width: 100%; height: 100%;"></iframe>`;
           document.body.appendChild(element);
       }
   }
@@ -297,7 +334,7 @@ class UnifiedModule {
 
       button.style.cssText = `
         position: fixed;
-        right: 20px;
+        right: 60px;
         bottom: 20px;
         height: 60px;
         width: 60px;
@@ -338,11 +375,10 @@ class UnifiedModule {
   handleSubscription(subscription) {
       return this.fetcher.subscribeAndListen({
           topics: subscription.topics,
-          //Did not remove callback, might be needed for more complex operations
           callback: subscription.callback,
           fieldId: this.fieldId,
           timeOut:this.timeOut,
-          // Taking in config data
+       
           configData: subscription.configData
       });
   }
@@ -359,4 +395,3 @@ class UnifiedModule {
   })
   }
 }
-
