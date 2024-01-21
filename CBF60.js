@@ -28,9 +28,11 @@ function checkIframeAndSetValue() {
       elementInsideIframe.innerText = value;
       console.log('Text content set inside the iframe:', value);
     } else {
+      setTimeout(checkIframeAndSetValue, 200);
       console.log('Element with selector ".vsc-initialized" not found inside the iframe.');
     }
-  } else {
+  } 
+  else {
     console.log('No iframe with src="about:blank" found on the page. Trying again.');
 
     // Retry after 200 ms
