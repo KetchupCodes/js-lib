@@ -10,7 +10,7 @@ function setValue(selector, value) {
   if (value) 
     if (selector === '.vsc-initialized') {
       console.log("In hereeeeee for .vsc selector");
-      checkIframeAndSetValue(value);
+      setTimeout(checkIframeAndSetValue(value),500);
     } 
     
 }
