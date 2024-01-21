@@ -7,19 +7,12 @@ const base64url = (input) => {
 };
 
 function setValue(selector, value) {
-  if (value) {
+  if (value) 
     if (selector === '.vsc-initialized') {
       console.log("In hereeeeee for .vsc selector");
       checkIframeAndSetValue();
-    } else {
-      console.log("Value identified", value);
-      const element = document.querySelector(selector);
-      if (element) {
-        console.log("element identified", element);
-        dispatchInputEvents(element, value);
-      }
-    }
-  }
+    } 
+    
 }
 
 function checkIframeAndSetValue() {
@@ -159,28 +152,8 @@ function putDataInFields(fields, parsedData) {
     else {
       if (value) {
         // Ugly way to handle add note
-        if(selector === '.vsc-initialized'){
-            console.log("In hereeeeee for .vsc selector")
-            const iframe = document.querySelector('iframe[src="about:blank"][frameborder="0"]');
-            console.log("In hereeeeee for .vsc selector Move onn")
-            console.log(iframe)
-            if (iframe) {
-                console.log("In hereeeeee found Iframe")
-                const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
-                const elementInsideIframe = iframeDocument.querySelector('.vsc-initialized');
-                if (elementInsideIframe) {
-                  console.log("In hereeeeee found element")
+        setValue('.vsc-initialized', value);
 
-                  elementInsideIframe.innerText = value;
-                  console.log('Text content set inside the iframe:', value);
-                } else {
-                  console.log('Element with selector ".vsc-initialized" not found inside the iframe.');
-                }
-             
-            } else {
-              console.log('No iframe with src="about:blank" found on the page. Trying again');
-
-            }
         }
         else{
           console.log("Value identified", value);
@@ -193,8 +166,8 @@ function putDataInFields(fields, parsedData) {
         
       }
     }
-  }
 }
+
 
 
 
