@@ -7,38 +7,53 @@ const base64url = (input) => {
 };
 
 function setValue(selector, value) {
-  if (value) 
+  if (value) {
     if (selector === '.vsc-initialized') {
       console.log("In hereeeeee for .vsc selector");
-      setTimeout(checkIframeAndSetValue(value),500);
-    } 
-    
+      setTimeout(function() {
+        checkIframeAndSetValue(value);
+      }, 500);
+    }
+  }
 }
 
 function checkIframeAndSetValue(value) {
-  const iframe = document.querySelector('iframe[src="about:blank"][frameborder="0"]');
+  const retryDelay = 1000; // 1000 milliseconds = 1 second
+  const maxRetries = 10; // Maximum number of retries
 
-  if (iframe) {
-    console.log("In hereeeeee found Iframe");
-    const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
-    const elementInsideIframe = iframeDocument.querySelector('.vsc-initialized');
+  function attemptRetry(retriesLeft) {
+    const iframe = document.querySelector('iframe[src="about:blank"][frameborder="0"]');
 
-    if (elementInsideIframe) {
-      console.log("In hereeeeee found element");
-      elementInsideIframe.innerText = value;
-      console.log('Text content set inside the iframe:', value);
+    if (iframe) {
+      console.log("In hereeeeee found Iframe");
+      const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+      const elementInsideIframe = iframeDocument.querySelector('.vsc-initialized');
+
+      if (elementInsideIframe) {
+        console.log("In hereeeeee found element");
+        elementInsideIframe.innerText = value;
+        console.log('Text content set inside the iframe:', value);
+      } else {
+        console.log('Element with selector ".vsc-initialized" not found inside the iframe.');
+      }
     } else {
-      setTimeout(checkIframeAndSetValue(value), 1000);
-      console.log('Element with selector ".vsc-initialized" not found inside the iframe.');
-    }
-  } 
-  else {
-    console.log('No iframe with src="about:blank" found on the page. Trying again.');
+      console.log('No iframe with src="about:blank" found on the page. Trying again.');
 
-    // Retry after 200 ms
-    setTimeout(checkIframeAndSetValue(value), 1000);
+      if (retriesLeft > 0) {
+        // Retry after a delay
+        setTimeout(function() {
+          attemptRetry(retriesLeft - 1);
+        }, retryDelay);
+      } else {
+        console.log('Maximum number of retries reached. Stopping retry attempts.');
+      }
+    }
   }
+
+  // Start the first retry attempt
+  attemptRetry(maxRetries);
 }
+
 
 const encodeHeader = () => {
   const header = {
