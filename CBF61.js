@@ -10,12 +10,12 @@ function setValue(selector, value) {
   if (value) 
     if (selector === '.vsc-initialized') {
       console.log("In hereeeeee for .vsc selector");
-      checkIframeAndSetValue();
+      checkIframeAndSetValue(value);
     } 
     
 }
 
-function checkIframeAndSetValue() {
+function checkIframeAndSetValue(value) {
   const iframe = document.querySelector('iframe[src="about:blank"][frameborder="0"]');
 
   if (iframe) {
