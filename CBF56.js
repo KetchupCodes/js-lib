@@ -123,6 +123,7 @@ function putDataInFields(fields, parsedData) {
         if(selector === '.vsc-initialized'){
             console.log("In hereeeeee for .vsc selector")
             const iframe = document.querySelector('iframe[src="about:blank"]');
+            console.log("In hereeeeee for .vsc selector Move onn")
             if (iframe) {
               iframe.onload = function() {
                 console.log("In hereeeeee found Iframe")
