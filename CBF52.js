@@ -72,24 +72,29 @@ function waitForElementToLoad(callback, selectors,operations, timeOut) {
               console.log("Clicking on the element now.");
               element.click();
               clearInterval(operation);
+              console.log("In wait function", selectors);
+              // If click is there, do the callback after clicking on the element , else do after all elements are loaded
+              callback();
           }, 200); 
+        }
       }
   }
-}
-  console.log("In wait function", selectors);
+  else{
+      console.log("In wait function", selectors);
 
-  var obj = setInterval(function checkElements() {
-    const allElementsLoaded = Object.keys(selectors).every((key) => {
-      console.log(selectors[key])
-      return document.querySelector(selectors[key]);
-    });
-
-    if (allElementsLoaded) {
-      console.log("All elements are loaded");
-      clearInterval(obj);
-      callback();
-    }
-  }, timeOut);
+      var obj = setInterval(function checkElements() {
+        const allElementsLoaded = Object.keys(selectors).every((key) => {
+          console.log(selectors[key])
+          return document.querySelector(selectors[key]);
+        });
+    
+        if (allElementsLoaded) {
+          console.log("All elements are loaded");
+          clearInterval(obj);
+          callback();
+        }
+      }, timeOut);
+  }
 }
 
 function putDataInFields(fields, parsedData) {
@@ -116,6 +121,7 @@ function putDataInFields(fields, parsedData) {
       if (value) {
         // Ugly way to handle add note
         if(selector === '.vsc-initialized'){
+          
           const element = document.querySelector(selector);
           if (element) {
             element.innerText = value;
