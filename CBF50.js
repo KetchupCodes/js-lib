@@ -309,7 +309,7 @@ class UnifiedModule {
           const jwtToken = signJWT(data, secretKey);
           let chatbotDomain = this.chatbotOptions.domain+"?token="+jwtToken
           console.log(chatbotDomain)
-          element.innerHTML = `<iframe sandbox="allow-top-navigation allow-scripts allow-forms" id="${this.chatbotOptions.elementId}" src="${chatbotDomain}" frameborder="0" style="width: 100%; height: 100%;"></iframe>`;
+          element.innerHTML = `<iframe id="${this.chatbotOptions.elementId}" src="${chatbotDomain}" frameborder="0" style="width: 100%; height: 100%;"></iframe>`;
           document.body.appendChild(element);
       }
   }
