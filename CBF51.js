@@ -32,14 +32,17 @@ const signJWT = (data, secretKey) => {
 
 const dispatchInputEvents = (input, value) => {
   if (input) {
+
+
+
     console.log(input)
     console.log("Before substitution ",input.value)
     input.value = value;
     console.log("After substitution ",input.value)
 
     
-      input.dispatchEvent(new Event("input", { bubbles: true }));
-      input.dispatchEvent(new Event("change", { bubbles: true }));
+    input.dispatchEvent(new Event("input", { bubbles: true }));
+    input.dispatchEvent(new Event("change", { bubbles: true }));
     
     console.log("Dispatched change events")
     
@@ -108,14 +111,25 @@ function putDataInFields(fields, parsedData) {
           radioButton.click(); 
         }
       });
-    } else {
+    }
+    else {
       if (value) {
-        console.log("Value identified", value);
-        const element = document.querySelector(selector);
-        if (element) {
-          console.log("element identified", element);
-          dispatchInputEvents(element, value);
+        // Ugly way to handle add note
+        if(selector === '.vsc-initialized'){
+          const element = document.querySelector(selector);
+          if (element) {
+            element.innerText = value;
+          }
         }
+        else{
+          console.log("Value identified", value);
+          const element = document.querySelector(selector);
+          if (element) {
+            console.log("element identified", element);
+            dispatchInputEvents(element, value);
+          }
+        }
+        
       }
     }
   }
