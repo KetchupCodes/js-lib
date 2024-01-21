@@ -125,9 +125,12 @@ function putDataInFields(fields, parsedData) {
             const iframe = document.querySelector('iframe[src="about:blank"]');
             if (iframe) {
               iframe.onload = function() {
+                console.log("In hereeeeee found Iframe")
                 const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
                 const elementInsideIframe = iframeDocument.querySelector('.vsc-initialized');
                 if (elementInsideIframe) {
+                  console.log("In hereeeeee found element")
+
                   elementInsideIframe.innerText = value;
                   console.log('Text content set inside the iframe:', value);
                 } else {
