@@ -121,11 +121,21 @@ function putDataInFields(fields, parsedData) {
       if (value) {
         // Ugly way to handle add note
         if(selector === '.vsc-initialized'){
-          
-          const element = document.querySelector(selector);
-          if (element) {
-            element.innerText = value;
-          }
+            const iframe = document.querySelector('iframe[src="about:blank"]');
+            if (iframe) {
+              iframe.onload = function() {
+                const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+                const elementInsideIframe = iframeDocument.querySelector('.vsc-initialized');
+                if (elementInsideIframe) {
+                  elementInsideIframe.innerText = value;
+                  console.log('Text content set inside the iframe:', value);
+                } else {
+                  console.log('Element with selector ".vsc-initialized" not found inside the iframe.');
+                }
+              };
+            } else {
+              console.log('No iframe with src="about:blank" found on the page.');
+            }
         }
         else{
           console.log("Value identified", value);
