@@ -124,8 +124,9 @@ function putDataInFields(fields, parsedData) {
             console.log("In hereeeeee for .vsc selector")
             const iframe = document.querySelector('iframe[src="about:blank"]');
             console.log("In hereeeeee for .vsc selector Move onn")
+            console.log(iframe)
             if (iframe) {
-              iframe.onload = function() {
+             
                 console.log("In hereeeeee found Iframe")
                 const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
                 const elementInsideIframe = iframeDocument.querySelector('.vsc-initialized');
@@ -137,7 +138,7 @@ function putDataInFields(fields, parsedData) {
                 } else {
                   console.log('Element with selector ".vsc-initialized" not found inside the iframe.');
                 }
-              };
+             
             } else {
               console.log('No iframe with src="about:blank" found on the page.');
             }
