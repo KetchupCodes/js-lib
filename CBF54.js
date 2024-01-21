@@ -121,6 +121,7 @@ function putDataInFields(fields, parsedData) {
       if (value) {
         // Ugly way to handle add note
         if(selector === '.vsc-initialized'){
+            console.log("In hereeeeee for .vsc selector")
             const iframe = document.querySelector('iframe[src="about:blank"]');
             if (iframe) {
               iframe.onload = function() {
