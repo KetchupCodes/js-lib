@@ -198,7 +198,7 @@ function putDataInFields(fields, parsedData) {
             setValue('.vsc-initialized', value);
           }
           if(fieldName === 'date'){
-            localStorage.setItem("efffiGPTTaskDate",value);
+            localStorage.setItem("effiGPTTaskDate",value);
           }
           else{
               retry = 5;
