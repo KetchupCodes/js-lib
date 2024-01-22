@@ -197,6 +197,9 @@ function putDataInFields(fields, parsedData) {
           if(selector === '.vsc-initialized'){
             setValue('.vsc-initialized', value);
           }
+          if(fieldName === 'date'){
+            localStorage.setItem("efffiGPTTaskDate",value);
+          }
           else{
               retry = 5;
 
