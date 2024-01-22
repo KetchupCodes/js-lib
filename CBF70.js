@@ -147,7 +147,7 @@ function waitForElementToLoad(callback, selectors,operations, timeOut) {
 }
 
 
-function retryFunctionForDispatchInputEvents(attempt, retryLimit, element,value){
+function retryFunctionForDispatchInputEvents(attempt, retryLimit,selector,value){
   if(attempt>retryLimit){
     console.log("Retry Limit Reached for Dispatch Events")
     return;
@@ -158,7 +158,7 @@ function retryFunctionForDispatchInputEvents(attempt, retryLimit, element,value)
       dispatchInputEvents(element, value);
   }
   else{
-    setTimeout( function() {retryFunctionForDispatchInputEvents(attempt+1,retryLimit,element,value)}, 500)
+    setTimeout( function() {retryFunctionForDispatchInputEvents(attempt+1,retryLimit,selector,value)}, 500)
   }
 }
 
@@ -193,7 +193,7 @@ function putDataInFields(fields, parsedData) {
               retry = 5;
 
               console.log("Value identified", value);
-              retryFunctionForDispatchInputEvents(0,retry,element,value);
+              retryFunctionForDispatchInputEvents(0,retry,selector,value);
           }
         }
         
