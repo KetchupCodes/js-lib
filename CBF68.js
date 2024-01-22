@@ -172,13 +172,13 @@ function putDataInFields(fields, parsedData) {
           if(selector === '.vsc-initialized'){
             setValue('.vsc-initialized', value);
           }
-
-        
-          console.log("Value identified", value);
-          const element = document.querySelector(selector);
-          if (element) {
-            console.log("element identified", element);
-            dispatchInputEvents(element, value);
+          else{
+              console.log("Value identified", value);
+              const element = document.querySelector(selector);
+              if (element) {
+                  console.log("element identified", element);
+                  dispatchInputEvents(element, value);
+              }
           }
         }
         
