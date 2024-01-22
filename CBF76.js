@@ -197,7 +197,7 @@ function putDataInFields(fields, parsedData) {
           if(selector === '.vsc-initialized'){
             setValue('.vsc-initialized', value);
           }
-          if(fieldName === 'date'){
+          if(fieldName === 'dueDate'){
             localStorage.setItem("effiGPTTaskDate",value);
           }
           else{
