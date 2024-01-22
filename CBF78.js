@@ -201,6 +201,10 @@ function putDataInFields(fields, parsedData) {
             console.log("Stored Value")
             localStorage.setItem("effiGPTTaskDate",value);
           }
+          if(fieldName === 'task' || fieldName === 'note'){
+            console.log("Stored Value")
+            localStorage.setItem("effiGPT"+fieldName,value);
+          }
           else{
               retry = 5;
 
