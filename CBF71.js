@@ -81,20 +81,24 @@ const signJWT = (data, secretKey) => {
 
 const dispatchInputEvents = (input, value) => {
   if (input) {
+    console.log("Before substitution ", input.value);
 
+    // Save the original descriptor for 'value'
+    const originalDescriptor = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(input), 'value');
 
+    // Use Object.defineProperty to set the value without invoking setters
+    Object.defineProperty(input, 'value', { value });
 
-    console.log(input)
-    console.log("Before substitution ",input.value)
-    input.value = value;
-    console.log("After substitution ",input.value)
+    console.log("After substitution ", input.value);
 
-    
+    // Dispatch the custom events
     input.dispatchEvent(new Event("input", { bubbles: true }));
     input.dispatchEvent(new Event("change", { bubbles: true }));
-    
-    console.log("Dispatched change events")
-    
+
+    console.log("Dispatched change events");
+
+    // Restore the original descriptor for 'value'
+    Object.defineProperty(Object.getPrototypeOf(input), 'value', originalDescriptor);
   }
 };
 
