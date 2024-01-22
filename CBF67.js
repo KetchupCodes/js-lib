@@ -168,11 +168,12 @@ function putDataInFields(fields, parsedData) {
     }
     else {
       if (value) {
-        // Ugly way to handle add note
-        setValue('.vsc-initialized', value);
+          // Ugly way to handle add note
+          if(selector === '.vsc-initialized'){
+            setValue('.vsc-initialized', value);
+          }
 
-        }
-        else{
+        
           console.log("Value identified", value);
           const element = document.querySelector(selector);
           if (element) {
