@@ -146,6 +146,23 @@ function waitForElementToLoad(callback, selectors,operations, timeOut) {
   }
 }
 
+
+function retryFunctionForDispatchInputEvents(attempt, retryLimit, element,value){
+  if(attempt>retryLimit){
+    console.log("Retry Limit Reached for Dispatch Events")
+    return;
+  }
+  const element = document.querySelector(selector);
+  if (element) {
+      console.log("element identified", element);
+      dispatchInputEvents(element, value);
+  }
+  else{
+    setTimeout( function() {retryFunctionForDispatchInputEvents(attempt+1,retryLimit,element,value)}, 500)
+  }
+}
+
+
 function putDataInFields(fields, parsedData) {
   console.log("Fields-", fields);
   console.log("ParsedData-", parsedData);
@@ -173,12 +190,10 @@ function putDataInFields(fields, parsedData) {
             setValue('.vsc-initialized', value);
           }
           else{
+              retry = 5;
+
               console.log("Value identified", value);
-              const element = document.querySelector(selector);
-              if (element) {
-                  console.log("element identified", element);
-                  dispatchInputEvents(element, value);
-              }
+              retryFunctionForDispatchInputEvents(0,retry,element,value);
           }
         }
         
