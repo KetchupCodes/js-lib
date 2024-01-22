@@ -89,11 +89,9 @@ const dispatchInputEvents = (input, value) => {
       input.removeAttribute('readonly');
     }
 
-    // Save the original descriptor for 'value'
-    const originalDescriptor = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(input), 'value');
-
-    // Use Object.defineProperty to set the value without invoking setters
-    Object.defineProperty(input, 'value', { value });
+    console.log("Value before is ",input.value)
+    input.value = value;
+    console.log("Value after is ", input.value)
 
     // Dispatch the custom events
     input.dispatchEvent(new Event('input', { bubbles: true }));
@@ -104,8 +102,6 @@ const dispatchInputEvents = (input, value) => {
       input.setAttribute('readonly', 'readonly');
     }
 
-    // Restore the original descriptor for 'value'
-    Object.defineProperty(Object.getPrototypeOf(input), 'value', originalDescriptor);
   }
 };
 
