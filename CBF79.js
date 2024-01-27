@@ -32,6 +32,7 @@ function checkIframeAndSetValue(value) {
       if (elementInsideIframe) {
         console.log("In hereeeeee found element");
         elementInsideIframe.innerText = value;
+
         console.log('Text content set inside the iframe:', value);
       } else {
         console.log('Element with selector ".vsc-initialized" not found inside the iframe.');
@@ -193,24 +194,9 @@ function putDataInFields(fields, parsedData) {
     }
     else {
       if (value) {
-          // Ugly way to handle add note
-          if(selector === '.vsc-initialized'){
-            setValue('.vsc-initialized', value);
-          }
-          if(fieldName === 'dueDate'){
-            console.log("Stored Value")
-            localStorage.setItem("effiGPTTaskDate",value);
-          }
-          if(fieldName === 'task' || fieldName === 'note'){
-            console.log("Stored Value")
-            localStorage.setItem("effiGPT"+fieldName,value);
-          }
-          else{
-              retry = 5;
-
-              console.log("Value identified", value);
-              retryFunctionForDispatchInputEvents(0,retry,selector,value);
-          }
+          retry = 5;
+          console.log("Value identified", value);
+          retryFunctionForDispatchInputEvents(0,retry,selector,value);
         }
         
       }
@@ -297,7 +283,9 @@ class Fetcher {
                   console.log(data.middleware.selector)
                   console.log(data.parsedData)
 
-                  
+                  if(data.middleware.operations.storeDataOnClientBrowser){
+                    localStorage.setItem("effiGPT"+data.middleware.operations.title,data.parsedData);
+                  }
                   //Calling the function to replace data to fields
                   putDataInFields(data.middleware.selector,data.parsedData);
                   if (typeof subscription.callback === "function") {
