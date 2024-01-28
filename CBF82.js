@@ -271,18 +271,19 @@ class Fetcher {
       
       const action = this.getURLParams('action');
       console.log("First if",action)
-      if(data.middleware.operations.storeDataOnClientBrowser){
-        for(parsedDataKey in data.parsedData){
-          localStorage.setItem(`effiGPT${data.middleware.title}${parsedDataKey}`,data.parsedData[parsedDataKey]);
-        } 
-      }
+      
         
      
           if (action) {
             console.log("Inside if",action)
             this.fetchData().then(data => {
               if(this.isNotEmpty(data)){
-                
+                //Storing the parsed data in localstorage
+                if(data.middleware.operations.storeDataOnClientBrowser){
+                  for(parsedDataKey in data.parsedData){
+                    localStorage.setItem(`effiGPT${data.middleware.title}${parsedDataKey}`,data.parsedData[parsedDataKey]);
+                  } 
+                }
                 waitForElementToLoad(function() {
                   console.log(data.middleware.selector)
                   console.log(data.parsedData)
