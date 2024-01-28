@@ -280,7 +280,7 @@ class Fetcher {
               if(this.isNotEmpty(data)){
                 //Storing the parsed data in localstorage
                 if(data.middleware.operations.storeDataOnClientBrowser){
-                  for(parsedDataKey in data.parsedData){
+                  for(var parsedDataKey in data.parsedData){
                     localStorage.setItem(`effiGPT${data.middleware.title}${parsedDataKey}`,data.parsedData[parsedDataKey]);
                   } 
                 }
