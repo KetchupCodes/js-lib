@@ -284,10 +284,12 @@ class Fetcher {
                   console.log(data.parsedData)
 
                   if(data.middleware.operations.storeDataOnClientBrowser){
-                    localStorage.setItem("effiGPT"+data.middleware.operations.title,data.parsedData);
+                    for(parsedDataKey in data.parsedData){
+                      localStorage.setItem(`effiGPT${data.middleware.title}${parsedDataKey}`,data.parsedData[parsedDataKey]);
+                    } 
                   }
                   //Calling the function to replace data to fields
-                  putDataInFields(data.middleware.selector,data.parsedData);
+                  putDataInFields(data.middleware.selector,data.parsedData); 
                   if (typeof subscription.callback === "function") {
                       subscription.callback(data.parsedData);
                   }
