@@ -271,7 +271,11 @@ class Fetcher {
       
       const action = this.getURLParams('action');
       console.log("First if",action)
-
+      if(data.middleware.operations.storeDataOnClientBrowser){
+        for(parsedDataKey in data.parsedData){
+          localStorage.setItem(`effiGPT${data.middleware.title}${parsedDataKey}`,data.parsedData[parsedDataKey]);
+        } 
+      }
         
      
           if (action) {
@@ -283,11 +287,7 @@ class Fetcher {
                   console.log(data.middleware.selector)
                   console.log(data.parsedData)
 
-                  if(data.middleware.operations.storeDataOnClientBrowser){
-                    for(parsedDataKey in data.parsedData){
-                      localStorage.setItem(`effiGPT${data.middleware.title}${parsedDataKey}`,data.parsedData[parsedDataKey]);
-                    } 
-                  }
+                  
                   //Calling the function to replace data to fields
                   putDataInFields(data.middleware.selector,data.parsedData); 
                   if (typeof subscription.callback === "function") {
