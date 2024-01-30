@@ -397,8 +397,21 @@ class UnifiedModule {
           const jwtToken = signJWT(data, secretKey);
           let chatbotDomain = this.chatbotOptions.domain+"?token="+jwtToken
           console.log(chatbotDomain)
-          element.innerHTML = `<iframe id="${this.chatbotOptions.elementId}" src="${chatbotDomain}" frameborder="0" style="width: 100%; height: 100%;"></iframe>`;
+
+          element.innerHTML = `
+          <div style="position: relative; height: 100%;">
+            <iframe id="${this.chatbotOptions.elementId}" src="${chatbotDomain}" frameborder="0" style="width: 100%; height: calc(100% - 40px);"></iframe>
+            <button id="closeChatbotBtn" style="position: absolute; top: 5px; right: 5px; background-color: #fff; border: none; cursor: pointer;">Close</button>
+          </div>
+        `;
+
           document.body.appendChild(element);
+          const closeButton = element.querySelector("#closeChatbotBtn");
+          if (closeButton) {
+            closeButton.addEventListener("click", () => {
+              element.style.display = "none";
+            });
+          }
       }
   }
 
