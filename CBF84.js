@@ -401,7 +401,7 @@ class UnifiedModule {
           element.innerHTML = `
           <div style="position: relative; height: 100%;">
             <iframe id="${this.chatbotOptions.elementId}" src="${chatbotDomain}" frameborder="0" style="width: 100%; height: calc(100% - 40px);"></iframe>
-            <button id="closeChatbotBtn" style="position: absolute; top: 5px; right: 5px; background-color: #fff; border: none; cursor: pointer;">Close</button>
+            <button id="closeChatbotBtn" style="position: absolute; top: 10px; right: 10px; padding: 5px 10px; background-color: #fff; border: 1px solid #ccc; border-radius: 5px; cursor: pointer;">Close</button>
           </div>
         `;
 
@@ -439,7 +439,7 @@ class UnifiedModule {
         bottom: 20px;
         height: 60px;
         width: 60px;
-        background-color: #724ae8;
+        background-color: #24275E;
         border-radius: 50%;
         border: none;
         cursor: pointer;
