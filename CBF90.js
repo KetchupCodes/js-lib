@@ -405,13 +405,14 @@ class UnifiedModule {
       `;
   
       document.body.appendChild(element);
-      const closeButton = element.querySelector("#closeButton");
-      if (closeButton) {
-        closeButton.addEventListener("click", () => {
-          const iframe = element.querySelector('iframe');
-          iframe.contentWindow.postMessage({ action: 'closeChatbot' }, '*');
-        });
-      }
+      window.addEventListener('message', (event) => {
+        if (event.data && event.data.action === 'closeChatbot') {
+          const chatbotContainer = document.getElementById('chatbot-container');
+          if (chatbotContainer) {
+            chatbotContainer.style.display = 'none';
+          }
+        }
+      });
     }
   }
   
