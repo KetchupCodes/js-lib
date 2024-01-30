@@ -370,50 +370,64 @@ class UnifiedModule {
   }
 
   createChatbotIframe() {
-      let element = document.getElementById('chatbot-container');
-      if (!element) {
-          element = document.createElement('div');
-          element.id = 'chatbot-container';
-          element.style.cssText = `
-            position: fixed; 
-            right: 80px; 
-            bottom: 68px; 
-            width: ${this.chatbotOptions.defaultWidth}; 
-            height: ${this.chatbotOptions.defaultHeight}; 
-            border: none; 
-            padding: 0;
-            box-sizing: border-box;
-            display: none; 
-            z-index: 999;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-          `;
-          const secretKey = "abc0372c1065e9651e4bb79511865942b6701f80509d04ce39ec28b8e4c80466"; 
-          let data = {
-            metaData: this.chatbotOptions.metaData,
-            apiKey: this.chatbotOptions.apiKey
-          }
-          const jwtToken = signJWT(data, secretKey);
-          let chatbotDomain = this.chatbotOptions.domain+"?token="+jwtToken
-          console.log(chatbotDomain)
-
-          element.innerHTML = `
-          <div style="position: relative; height: 100%;">
-            <iframe id="${this.chatbotOptions.elementId}" src="${chatbotDomain}" frameborder="0" style="width: 100%; height: calc(100% - 40px);"></iframe>
-            <button id="closeChatbotBtn" style="position: absolute; top: 10px; right: 10px; padding: 5px 10px; background-color: #fff; border: 1px solid #ccc; border-radius: 5px; cursor: pointer;">Close</button>
-          </div>
-        `;
-
-          document.body.appendChild(element);
-          const closeButton = element.querySelector("#closeChatbotBtn");
-          if (closeButton) {
-            closeButton.addEventListener("click", () => {
-              element.style.display = "none";
-            });
-          }
+    let element = document.getElementById('chatbot-container');
+    if (!element) {
+      element = document.createElement('div');
+      element.id = 'chatbot-container';
+      element.style.cssText = `
+        position: fixed; 
+        right: 80px; 
+        bottom: 68px; 
+        width: ${this.chatbotOptions.defaultWidth}; 
+        height: ${this.chatbotOptions.defaultHeight}; 
+        border: none; 
+        padding: 0;
+        box-sizing: border-box;
+        display: none; 
+        z-index: 999;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      `;
+      const secretKey = "abc0372c1065e9651e4bb79511865942b6701f80509d04ce39ec28b8e4c80466"; 
+      let data = {
+        metaData: this.chatbotOptions.metaData,
+        apiKey: this.chatbotOptions.apiKey
       }
+      const jwtToken = signJWT(data, secretKey);
+      let chatbotDomain = this.chatbotOptions.domain + "?token=" + jwtToken;
+      console.log(chatbotDomain);
+  
+      element.innerHTML = `
+        <div style="position: relative; height: 100%;">
+          <iframe id="${this.chatbotOptions.elementId}" src="${chatbotDomain}" frameborder="0" style="width: 100%; height: calc(100% - 40px);"></iframe>
+        </div>
+      `;
+  
+      document.body.appendChild(element);
+  
+      const closeButton = document.createElement('button');
+      closeButton.id = 'closeChatbotBtn';
+      closeButton.style.cssText = `
+        position: fixed;
+        top: ${window.innerHeight - 20}px;
+        right: ${window.innerWidth - 20}px;
+        padding: 10px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 50%;
+        cursor: pointer;
+      `;
+      
+      document.body.appendChild(closeButton);
+  
+      closeButton.addEventListener('click', () => {
+        element.style.display = 'none';
+        closeButton.style.display = 'none';
+      });
+    }
   }
+  
 
   loadFontAwesome() {
       const link = document.createElement('link');
