@@ -431,7 +431,7 @@ class UnifiedModule {
 
       const icon = document.createElement('i');
       icon.classList.add('fa-regular', 'fa-comment', 'fa-2xl');
-      icon.style.cssText = 'color: #e2dd40; pointer-events: none;';
+      icon.style.cssText = 'color: #ffffff; pointer-events: none;';
 
       button.appendChild(icon);
 
