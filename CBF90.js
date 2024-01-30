@@ -408,7 +408,8 @@ class UnifiedModule {
       const closeButton = element.querySelector("#closeButton");
       if (closeButton) {
         closeButton.addEventListener("click", () => {
-          element.style.display = "none";
+          const iframe = element.querySelector('iframe');
+          iframe.contentWindow.postMessage({ action: 'closeChatbot' }, '*');
         });
       }
     }
