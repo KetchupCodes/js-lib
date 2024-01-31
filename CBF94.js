@@ -400,7 +400,7 @@ class UnifiedModule {
   
       element.innerHTML = `
         <div style="position: relative; height: 100%;">
-          <iframe id="${this.chatbotOptions.elementId}" src="${chatbotDomain}" frameborder="0" style="${this.chatbotOptions.defaultWidth}; height:${this.chatbotOptions.defaultHeight} ;"></iframe>
+          <iframe id="${this.chatbotOptions.elementId}" src="${chatbotDomain}" frameborder="0" style="width:${this.chatbotOptions.defaultWidth}; height:${this.chatbotOptions.defaultHeight} ;"></iframe>
         </div>
       `;
   
