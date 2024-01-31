@@ -66,6 +66,7 @@ const encodeHeader = () => {
 };
 
 const encodePayload = (data) => {
+  console.log("Trying to encode metadata ",data)
   const jsonPayload = JSON.stringify(data);
   return base64url(jsonPayload);
 };
