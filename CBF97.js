@@ -187,7 +187,7 @@ function putDataInFields(fields, parsedData) {
       const radioButtons = document.querySelectorAll(`${radioGroupSelector} input`);
       
       radioButtons.forEach((radioButton) => {
-        if(radioButton.value){
+        if(value ){
           if (radioButton.value.toLowerCase() === value.toLowerCase()) {
             radioButton.click(); 
           }
