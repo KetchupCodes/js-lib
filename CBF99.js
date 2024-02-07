@@ -399,7 +399,7 @@ class UnifiedModule {
         apiKey: this.chatbotOptions.apiKey
       }
       const jwtToken = signJWT(data, secretKey);
-      let chatbotDomain = this.chatbotOptions.domain + "?token=" + jwtToken;
+      let chatbotDomain = this.chatbotOptions.domain ;
       console.log(chatbotDomain);
   
       element.innerHTML = `
@@ -409,6 +409,11 @@ class UnifiedModule {
       `;
   
       document.body.appendChild(element);
+      const iframe = element.querySelector('iframe');
+      iframe.onload = () => {
+          // Ensure you're posting to the correct domain for security
+          iframe.contentWindow.postMessage({ token: jwtToken }, chatbotDomain);
+      };
       window.addEventListener('message', (event) => {
         if (event.data && event.data.action === 'closeChatbot') {
           const chatbotContainer = document.getElementById('chatbot-container');
