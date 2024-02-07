@@ -1,9 +1,28 @@
 //JWT Functions
-const base64url = (input) => {
-  return btoa(input)
-    .replace(/=/g, '')
-    .replace(/\+/g, '-')
-    .replace(/\//g, '_');
+const base64url = (source) => {
+  // Encodes in base64 and converts to base64url by replacing '+' with '-', '/' with '_', and removing '='
+  return source.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+};
+
+const signJWT = (data, secretKey) => {
+  const header = {
+    alg: 'HS256',
+    typ: 'JWT',
+  };
+
+  const encodedHeader = base64url(btoa(JSON.stringify(header)));
+
+  const encodedPayload = base64url(btoa(JSON.stringify(data)));
+
+  const unsignedToken = `${encodedHeader}.${encodedPayload}`;
+
+  const signature = CryptoJS.HmacSHA256(unsignedToken, secretKey);
+
+  const signatureBase64 = CryptoJS.enc.Base64.stringify(signature);
+
+  const encodedSignature = base64url(signatureBase64);
+
+  return `${encodedHeader}.${encodedPayload}.${encodedSignature}`;
 };
 
 function setValue(selector, value) {
@@ -71,15 +90,6 @@ const encodePayload = (data) => {
   return base64url(jsonPayload);
 };
 
-const signJWT = (data, secretKey) => {
-  const header = encodeHeader();
-  const payload = encodePayload(data);
-
-  const signatureInput = `${header}.${payload}`;
-  const signature = base64url(CryptoJS.HmacSHA256(signatureInput, secretKey));
-
-  return `${header}.${payload}.${signature}`;
-};
 
 const dispatchInputEvents = (input, value) => {
   if (input) {
@@ -491,7 +501,6 @@ class UnifiedModule {
           callback: subscription.callback,
           fieldId: this.fieldId,
           timeOut:this.timeOut,
-       
           configData: subscription.configData
       });
   }
