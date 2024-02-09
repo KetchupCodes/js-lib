@@ -347,7 +347,7 @@ class Fetcher {
 
   async fetchData() {
     const url = this.constructFetchUrl();
-  
+    console.log("Fetch URL IS ",url)
     try {
       const response = await fetch(url, {
         headers: {
