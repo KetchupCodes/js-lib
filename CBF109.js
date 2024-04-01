@@ -409,7 +409,7 @@ class UnifiedModule {
         }
   
         #chatbot-container.show {
-          right: 5px; /* Position the container at its desired location when shown */
+          right: 50px; /* Position the container at its desired location when shown */
         }
       `;
       document.head.appendChild(style);
