@@ -439,7 +439,7 @@ class UnifiedModule {
         if (event.data && event.data.action === 'closeChatbot') {
           const chatbotContainer = document.getElementById('chatbot-container');
           if (chatbotContainer) {
-            chatbotContainer.style.right = '-520px';
+            chatbotContainer.classList.toggle('show');
           }
         }
       });
@@ -459,7 +459,7 @@ class UnifiedModule {
   handleClickOutside(event) {
       const chatbotContainer = document.getElementById('chatbot-container');
       if (chatbotContainer && !chatbotContainer.contains(event.target) && !event.target.classList.contains('chatbot-toggler')) {
-        chatbotContainer.style.right = '-520px';
+        chatbotContainer.classList.toggle('show');
       }
   }
 
