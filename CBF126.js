@@ -459,7 +459,7 @@ class UnifiedModule {
   handleClickOutside(event) {
       const chatbotContainer = document.getElementById('chatbot-container');
       if (chatbotContainer && !chatbotContainer.contains(event.target) && !event.target.classList.contains('chatbot-toggler')) {
-          chatbotContainer.style.display = 'none';
+        chatbotContainer.style.right = '-520px';
       }
   }
 
