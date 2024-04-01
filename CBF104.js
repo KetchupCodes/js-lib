@@ -388,22 +388,31 @@ class UnifiedModule {
     if (!element) {
       element = document.createElement('div');
       element.id = 'chatbot-container';
-      element.style.cssText = `
-        position: fixed; 
-        right: 5px; 
-        bottom: 5px; 
-        width: ${this.chatbotOptions.defaultWidth}; 
-        height: ${this.chatbotOptions.defaultHeight}; 
-        border: none; 
-        padding: 0;
-        display: none;
-        box-sizing: border-box;
-        display: none; 
-        z-index: 999;
-        border-radius: 15px;
-        overflow: hidden;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+      // Create a <style> element and append it to the <head>
+      const style = document.createElement('style');
+      style.innerHTML = `
+        #chatbot-container {
+          position: fixed;
+          right: -400px; /* Initially position the container off-screen to the right */
+          bottom: 5px;
+          width: ${this.chatbotOptions.defaultWidth};
+          height: ${this.chatbotOptions.defaultHeight};
+          border: none;
+          padding: 0;
+          box-sizing: border-box;
+          z-index: 999;
+          border-radius: 15px;
+          overflow: hidden;
+          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+          transition: right 0.3s ease-in-out; /* Add a transition for the right property */
+        }
+  
+        #chatbot-container.show {
+          right: 5px; /* Position the container at its desired location when shown */
+        }
       `;
+      document.head.appendChild(style);
       const secretKey = "abc0372c1065e9651e4bb79511865942b6701f80509d04ce39ec28b8e4c80466"; 
       let data = {
         metaData: this.chatbotOptions.metaData,
@@ -458,6 +467,7 @@ class UnifiedModule {
         if (event.target.id === 'effi_ai_chatbot_list_item' || event.target.id === 'effi_ai_chatbot_logo') {
           const chatbotContainer = document.getElementById('chatbot-container');
           if (chatbotContainer) {
+            chatbotContainer.classList.toggle('show');
             const computedStyle = window.getComputedStyle(chatbotContainer);
             console.log(computedStyle.display)
             const isCurrentlyHidden = computedStyle.display === 'none';
