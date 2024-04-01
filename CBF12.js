@@ -405,7 +405,7 @@ class UnifiedModule {
           border-radius: 15px;
           overflow: hidden;
           box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-          transition: right 5s ease-in-out; /* Add a transition for the right property */
+          transition: right 0.5s ease-in-out; /* Add a transition for the right property */
         }
   
         #chatbot-container.show {
