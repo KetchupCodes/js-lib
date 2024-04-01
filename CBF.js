@@ -394,7 +394,7 @@ class UnifiedModule {
       style.innerHTML = `
         #chatbot-container {
           position: fixed;
-          right: -${this.chatbotOptions.defaultWidth}px; /* Initially position the container off-screen to the right */
+          right: -${this.chatbotOptions.defaultWidth}rem; /* Initially position the container off-screen to the right */
           bottom: 5px;
           width: ${this.chatbotOptions.defaultWidth};
           height: ${this.chatbotOptions.defaultHeight};
