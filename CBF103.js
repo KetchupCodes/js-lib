@@ -459,7 +459,7 @@ class UnifiedModule {
           const chatbotContainer = document.getElementById('chatbot-container');
           if (chatbotContainer) {
             const computedStyle = window.getComputedStyle(chatbotContainer);
-            console.log(computedStyle)
+            console.log(computedStyle.display)
             const isCurrentlyHidden = computedStyle.display === 'none';
       
             if (isCurrentlyHidden) {
