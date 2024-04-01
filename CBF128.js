@@ -457,19 +457,19 @@ class UnifiedModule {
 
 
   handleClickOutside(event) {
-      const chatbotContainer = document.getElementById('chatbot-container');
-      if (chatbotContainer && !chatbotContainer.contains(event.target) && !event.target.classList.contains('chatbot-toggler')) {
-        chatbotContainer.classList.toggle('show');
-      }
+    const chatbotContainer = document.getElementById('chatbot-container');
+    if (chatbotContainer && !chatbotContainer.contains(event.target) && !event.target.classList.contains('chatbot-toggler')) {
+      chatbotContainer.classList.remove('show'); // Remove the 'show' class to hide the container
+    }
   }
 
-  openChatbotUI(event){
-        if (event.target.id === 'effi_ai_chatbot_list_item' || event.target.id === 'effi_ai_chatbot_logo') {
-          const chatbotContainer = document.getElementById('chatbot-container');
-          if (chatbotContainer) {
-            chatbotContainer.classList.toggle('show');
-          }
-        }
+  openChatbotUI(event) {
+    if (event.target.id === 'effi_ai_chatbot_list_item' || event.target.id === 'effi_ai_chatbot_logo') {
+      const chatbotContainer = document.getElementById('chatbot-container');
+      if (chatbotContainer) {
+        chatbotContainer.classList.toggle('show'); // Toggle the 'show' class of the container
+      }
+    }
   }
 
   initChatbotLoader() {
