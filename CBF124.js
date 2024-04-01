@@ -405,7 +405,7 @@ class UnifiedModule {
           border-radius: 15px;
           overflow: hidden;
           box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-          transition: right 0.5s ease-in-out; /* Add a transition for the right property */
+          transition: right 2s ease-in-out; /* Add a transition for the right property */
         }
   
         #chatbot-container.show {
@@ -439,7 +439,7 @@ class UnifiedModule {
         if (event.data && event.data.action === 'closeChatbot') {
           const chatbotContainer = document.getElementById('chatbot-container');
           if (chatbotContainer) {
-            chatbotContainer.style.display = 'none';
+            chatbotContainer.style.right = '-520px';
           }
         }
       });
@@ -468,15 +468,6 @@ class UnifiedModule {
           const chatbotContainer = document.getElementById('chatbot-container');
           if (chatbotContainer) {
             chatbotContainer.classList.toggle('show');
-            const computedStyle = window.getComputedStyle(chatbotContainer);
-            console.log(computedStyle.display)
-            const isCurrentlyHidden = computedStyle.display === 'none';
-      
-            if (isCurrentlyHidden) {
-              chatbotContainer.style.display = 'block';
-            } else {
-              chatbotContainer.style.display = 'none';
-            }
           }
         }
   }
