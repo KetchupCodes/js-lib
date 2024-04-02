@@ -457,7 +457,7 @@ class UnifiedModule {
 
       button.style.cssText = `
         position: fixed;
-        left: 60px;
+        left: 30px;
         bottom: 20px;
         height: 60px;
         width: 60px;
