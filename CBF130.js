@@ -388,31 +388,21 @@ class UnifiedModule {
     if (!element) {
       element = document.createElement('div');
       element.id = 'chatbot-container';
-
-      // Create a <style> element and append it to the <head>
-      const style = document.createElement('style');
-      style.innerHTML = `
-        #chatbot-container {
-          position: fixed;
-          right: -520px; /* Initially position the container off-screen to the right */
-          bottom: 5px;
-          width: ${this.chatbotOptions.defaultWidth};
-          height: ${this.chatbotOptions.defaultHeight};
-          border: none;
-          padding: 0;
-          box-sizing: border-box;
-          z-index: 999;
-          border-radius: 15px;
-          overflow: hidden;
-          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-          transition: right 2s ease-in-out; /* Add a transition for the right property */
-        }
-  
-        #chatbot-container.show {
-          right: 50px; /* Position the container at its desired location when shown */
-        }
+      element.style.cssText = `
+        position: fixed; 
+        right: 80px; 
+        bottom: 68px; 
+        width: ${this.chatbotOptions.defaultWidth}; 
+        height: ${this.chatbotOptions.defaultHeight}; 
+        border: none; 
+        padding: 0;
+        box-sizing: border-box;
+        display: none; 
+        z-index: 999;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
       `;
-      document.head.appendChild(style);
       const secretKey = "abc0372c1065e9651e4bb79511865942b6701f80509d04ce39ec28b8e4c80466"; 
       let data = {
         metaData: this.chatbotOptions.metaData,
@@ -427,8 +417,7 @@ class UnifiedModule {
           <iframe id="${this.chatbotOptions.elementId}" src="${chatbotDomain}" frameborder="0" style="width:${this.chatbotOptions.defaultWidth}; height:${this.chatbotOptions.defaultHeight} ;"></iframe>
         </div>
       `;
-      
-
+  
       document.body.appendChild(element);
       const iframe = element.querySelector('iframe');
       iframe.onload = () => {
@@ -439,13 +428,13 @@ class UnifiedModule {
         if (event.data && event.data.action === 'closeChatbot') {
           const chatbotContainer = document.getElementById('chatbot-container');
           if (chatbotContainer) {
-            chatbotContainer.classList.toggle('show');
+            chatbotContainer.style.display = 'none';
           }
         }
       });
     }
   }
-
+  
   
 
   loadFontAwesome() {
@@ -455,27 +444,55 @@ class UnifiedModule {
       document.head.appendChild(link);
   }
 
+  createChatbotButton() {
+      const button = document.createElement('button');
+      button.classList.add('chatbot-toggler');
+      this.loadFontAwesome();
 
-  handleClickOutside(event) {
-    const chatbotContainer = document.getElementById('chatbot-container');
-    if (chatbotContainer && !chatbotContainer.contains(event.target) && !event.target.classList.contains('chatbot-toggler')) {
-      chatbotContainer.classList.remove('show'); // Remove the 'show' class to hide the container
-    }
+      const icon = document.createElement('i');
+      icon.classList.add('fa-regular', 'fa-comment', 'fa-2xl');
+      icon.style.cssText = 'color: #ffffff; pointer-events: none;';
+
+      button.appendChild(icon);
+
+      button.style.cssText = `
+        position: fixed;
+        left: 60px;
+        bottom: 20px;
+        height: 60px;
+        width: 60px;
+        background-color: #24275E;
+        border-radius: 50%;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        z-index: 1000;
+      `;
+
+      button.onclick = () => {
+          const chatbotContainer = document.getElementById('chatbot-container');
+          if(chatbotContainer){
+            chatbotContainer.style.display = chatbotContainer.style.display === 'none' || chatbotContainer.style.display === '' ? 'block' : 'none';
+          }
+      };
+
+      document.body.appendChild(button);
   }
 
-  openChatbotUI(event) {
-    if (event.target.id === 'effi_ai_chatbot_list_item' || event.target.id === 'effi_ai_chatbot_logo') {
+  handleClickOutside(event) {
       const chatbotContainer = document.getElementById('chatbot-container');
-      if (chatbotContainer) {
-        chatbotContainer.classList.toggle('show'); // Toggle the 'show' class of the container
+      if (chatbotContainer && !chatbotContainer.contains(event.target) && !event.target.classList.contains('chatbot-toggler')) {
+          chatbotContainer.style.display = 'none';
       }
-    }
   }
 
   initChatbotLoader() {
       this.createChatbotIframe();
+      this.createChatbotButton();
       document.addEventListener('click', this.handleClickOutside.bind(this));
-      document.addEventListener('click',this.openChatbotUI.bind(this));
   }
 
   handleSubscription(subscription) {
