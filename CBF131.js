@@ -390,7 +390,7 @@ class UnifiedModule {
       element.id = 'chatbot-container';
       element.style.cssText = `
         position: fixed; 
-        right: 80px; 
+        left: 80px; 
         bottom: 68px; 
         width: ${this.chatbotOptions.defaultWidth}; 
         height: ${this.chatbotOptions.defaultHeight}; 
