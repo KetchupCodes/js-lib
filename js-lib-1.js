@@ -431,6 +431,16 @@ class UnifiedModule {
             chatbotContainer.style.display = 'none';
           }
         }
+        if (event.data.action === 'waitForResponse') {
+          const keys = event.data.keys; 
+          const values = {};
+      
+          keys.forEach((key) => {
+            values[key] = sessionStorage.getItem(key);
+          });
+      
+          event.source.postMessage({ action: 'sendData', values }, event.origin);
+        }
       });
     }
   }
