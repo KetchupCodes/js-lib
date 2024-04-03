@@ -457,6 +457,7 @@ class UnifiedModule {
           }
         }
         if (event.data.action === 'waitForResponse'&& allowedOrigins.includes(event.origin)) {
+          console.log("Working Fine")
           const keys = event.data.keys; 
           const values = {};
       
