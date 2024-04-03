@@ -15,14 +15,11 @@ window.addEventListener('message', (event) => {
     const values = {};
     
     keys.forEach((key) => {
-      console.log(key)
       if(key==='Leads::Filters'){
-        console.log("Inside If")
-        board_id = sessionStorage.getItem(key)[0][1];
-        values["boardId"] = boardId;
+        var board_id = sessionStorage.getItem(key)[0][1];
+        values["boardId"] = board_id;
       }
       else{
-        console.log("Not going inside If")
         values[key] = sessionStorage.getItem(key);
       }
     });
