@@ -445,8 +445,8 @@ class UnifiedModule {
             if(key==='Leads::Filters'){
               console.log("Inside If")
               console.log(sessionStorage.getItem(key));
-              console.log(typeof json.parse(sessionStorage.getItem(key)))
-              const board_id = json.parse(sessionStorage.getItem(key))[0][1];
+              console.log(typeof JSON.parse(sessionStorage.getItem(key)))
+              const board_id = JSON.parse(sessionStorage.getItem(key))[0][1];
               values["boardId"] = board_id;
             }
             else{
@@ -474,6 +474,7 @@ class UnifiedModule {
       const button = document.createElement('button');
       button.classList.add('chatbot-toggler');
       this.loadFontAwesome();
+
 
       const icon = document.createElement('i');
       icon.classList.add('fa-regular', 'fa-comment', 'fa-2xl');
