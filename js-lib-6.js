@@ -1,4 +1,4 @@
-const allowedOrigins = [  'http://localhost', // Remove in prod
+const allowedOrigins = [  'http://localhost:3001', // Remove in prod
 'https://mfes.effi.com.au/effi-ai-service-chatbot-ui/index.html'
 ]; // List of allowed origins
 
