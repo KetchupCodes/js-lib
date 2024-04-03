@@ -13,9 +13,15 @@ window.addEventListener('message', (event) => {
   if (event.data.action === 'waitForResponse' && allowedOrigins.includes(event.origin)) {
     const keys = event.data.keys;
     const values = {};
-
+    
     keys.forEach((key) => {
-      values[key] = sessionStorage.getItem(key);
+      if(key==="Leads::Filters"){
+        board_id = sessionStorage.getItem(key)[0][1];
+        values["boardId"] = boardId;
+      }
+      else{
+        values[key] = sessionStorage.getItem(key);
+      }
     });
 
     event.source.postMessage({ action: 'sendData', values }, event.origin);
