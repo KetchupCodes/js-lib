@@ -448,13 +448,13 @@ class UnifiedModule {
           iframe.contentWindow.postMessage({ token: jwtToken }, chatbotDomain);
       };
       window.addEventListener('message', (event) => {
-        if (event.data && event.data.action === 'closeChatbot') {
+        if (event.data && event.data.action === 'closeChatbot'&& allowedOrigins.includes(event.origin)) {
           const chatbotContainer = document.getElementById('chatbot-container');
           if (chatbotContainer) {
             chatbotContainer.style.display = 'none';
           }
         }
-        if (event.data.action === 'waitForResponse') {
+        if (event.data.action === 'waitForResponse'&& allowedOrigins.includes(event.origin)) {
           const keys = event.data.keys; 
           const values = {};
       
