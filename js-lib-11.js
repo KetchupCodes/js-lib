@@ -2,31 +2,7 @@ const allowedOrigins = [  'http://localhost:3001', // Remove in prod
 'https://mfes.effi.com.au/effi-ai-service-chatbot-ui/index.html'
 ]; // List of allowed origins
 
-window.addEventListener('message', (event) => {
-  if (event.data && event.data.action === 'closeChatbot') {
-    const chatbotContainer = document.getElementById('chatbot-container');
-    if (chatbotContainer) {
-      chatbotContainer.style.display = 'none';
-    }
-  }
 
-  if (event.data.action === 'waitForResponse' && allowedOrigins.includes(event.origin)) {
-    const keys = event.data.keys;
-    const values = {};
-    
-    keys.forEach((key) => {
-      if(key==='Leads::Filters'){
-        var board_id = sessionStorage.getItem(key)[0][1];
-        values["boardId"] = board_id;
-      }
-      else{
-        values[key] = sessionStorage.getItem(key);
-      }
-    });
-
-    event.source.postMessage({ action: 'sendData', values }, event.origin);
-  }
-});
 //JWT Functions
 const base64url = (source) => {
   // Encodes in base64 and converts to base64url by replacing '+' with '-', '/' with '_', and removing '='
@@ -454,21 +430,25 @@ class UnifiedModule {
           iframe.contentWindow.postMessage({ token: jwtToken }, chatbotDomain);
       };
       window.addEventListener('message', (event) => {
-
-        console.log("Recieved Event",event)
-        if (event.data && event.data.action === 'closeChatbot'&& allowedOrigins.includes(event.origin)) {
+        if (event.data && event.data.action === 'closeChatbot') {
           const chatbotContainer = document.getElementById('chatbot-container');
           if (chatbotContainer) {
             chatbotContainer.style.display = 'none';
           }
         }
-        if (event.data.action === 'waitForResponse'&& allowedOrigins.includes(event.origin)) {
-          console.log("Working Fine")
-          const keys = event.data.keys; 
-          const values = {};
       
+        if (event.data.action === 'waitForResponse' && allowedOrigins.includes(event.origin)) {
+          const keys = event.data.keys;
+          const values = {};
+          
           keys.forEach((key) => {
-            values[key] = sessionStorage.getItem(key);
+            if(key==='Leads::Filters'){
+              var board_id = sessionStorage.getItem(key)[0][1];
+              values["boardId"] = board_id;
+            }
+            else{
+              values[key] = sessionStorage.getItem(key);
+            }
           });
       
           event.source.postMessage({ action: 'sendData', values }, event.origin);
