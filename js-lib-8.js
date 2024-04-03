@@ -15,7 +15,8 @@ window.addEventListener('message', (event) => {
     const values = {};
     
     keys.forEach((key) => {
-      if(key==="Leads::Filters"){
+
+      if(key==='Leads::Filters'){
         board_id = sessionStorage.getItem(key)[0][1];
         values["boardId"] = boardId;
       }
