@@ -445,8 +445,8 @@ class UnifiedModule {
             if(key==='Leads::Filters'){
               console.log("Inside If")
               console.log(sessionStorage.getItem(key));
-              console.log(typeof sessionStorage.getItem(key))
-              const board_id = sessionStorage.getItem(key)[0][1];
+              console.log(typeof json.parse(sessionStorage.getItem(key)))
+              const board_id = json.parse(sessionStorage.getItem(key))[0][1];
               values["boardId"] = board_id;
             }
             else{
