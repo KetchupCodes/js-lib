@@ -448,6 +448,8 @@ class UnifiedModule {
           iframe.contentWindow.postMessage({ token: jwtToken }, chatbotDomain);
       };
       window.addEventListener('message', (event) => {
+
+        console.log("Recieved Event",event)
         if (event.data && event.data.action === 'closeChatbot'&& allowedOrigins.includes(event.origin)) {
           const chatbotContainer = document.getElementById('chatbot-container');
           if (chatbotContainer) {
