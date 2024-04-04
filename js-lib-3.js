@@ -447,8 +447,12 @@ const allowedOrigins = [
               if(key==='Leads::Filters'){
                 let sessionStorageItems = JSON.parse(sessionStorage.getItem(key));
                 let board_id = null
+                console.log("Yo")
                 for (var item in sessionStorageItems){
+                  console.log(item)
                     if(item[0]==='boardId'){
+                      console.log(item[0])
+                      console.log(typeof item[0])
                       board_id = item[1]
                       break;
                     }
