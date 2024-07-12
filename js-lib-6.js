@@ -1,5 +1,5 @@
 const allowedOrigins = [
-  // 'http://localhost:3001',
+  'http://localhost:3001',
   'https://mfes.effi.com.au',
   'https://mfes-staging.s3.ap-southeast-2.amazonaws.com'
   ]; // List of allowed origins
